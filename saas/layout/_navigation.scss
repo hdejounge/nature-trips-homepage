@@ -1,0 +1,181 @@
+.navigation {
+    &__checkbox {
+        display: none;
+    }
+
+    &__button {
+        background-color: $color-white;
+        border-radius: 50%;
+        box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+        cursor: pointer;
+        height: 7rem;
+        text-align: center;
+        width: 7rem;
+
+        position: fixed;
+        right: 6rem;
+        top: 6rem;
+        z-index: 15;  // Above other circle
+
+        @include respond(tab-port) {
+            right: 3rem;
+            top: 3rem;
+
+            height: 5rem;
+            width: 5rem;
+        }
+
+
+    }
+
+    &__button:hover &__icon::before {
+        top: -1rem;
+    }
+
+    &__button:hover &__icon::after {
+        top: 1rem;
+    }
+
+    &__background {
+        background-image: radial-gradient($color-primary-light, $color-primary-dark);
+        border-radius: 50%;
+        height: 6rem;
+        width: 6rem;
+
+        position: fixed;
+        right: 6.5rem;
+        top: 6.5rem;
+        z-index: 10; // Always above
+
+        // transform: scale(50);
+        transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+
+        @include respond(tab-port) {
+            height: 4rem;
+            width: 4rem;
+
+            top: 3.9rem;
+            right: 3.2rem;
+        }
+    }
+
+    &__nav {
+        height: 100vh;
+        opacity: 0;
+        width: 0;
+
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 13;
+
+        transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+        visibility: hidden;
+    }
+
+    &__list {
+        // Center in middle of div
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        list-style: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    &__item {
+        margin: 1rem;
+    }
+
+
+    &__link {
+        &:link,
+        &:visited {
+            background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+            background-size: 280%;
+            color: $color-white;
+            display: inline-block;
+            font-size: 3rem;
+            font-weight: 300;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            transition: all 0.5s;
+        }
+
+        &:hover,
+        &:active {
+            background-position: 100%;
+            color: $color-primary-dark;
+            transform: translateX(1rem);
+        }
+    }
+    
+    // Functionality
+    &__checkbox:checked ~ &__background {
+        transform: scale(80);
+    }
+
+    &__checkbox:checked ~ &__nav {
+        opacity: 1;
+        width: 100%;
+    }
+
+    &__checkbox:checked ~ &__nav {
+        visibility: visible;
+    }
+
+    // Icon
+    &__icon {
+        margin-top: 3.4rem;
+        position: relative;
+
+        @include respond(tab-port) {
+            margin-top: 2.5rem;
+        }
+
+        &,
+        &::before,
+        &::after {
+            background-color: $color-grey-dark-3;
+            display: inline-block;
+            height: 2px;
+            width: 3rem;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            transition: all 0.6s;
+        }
+
+        &::before {
+            top: -0.8rem;
+        }
+
+        &::after {
+            top: 0.8rem;
+        }
+    }
+
+    &__checkbox:checked + &__button &__icon {
+        // Remove middle line from menu
+        background-color: transparent;
+    }
+
+    &__checkbox:checked + &__button &__icon::before {
+        top: 0;
+        transform: rotate(135deg);
+    }
+
+    &__checkbox:checked + &__button &__icon::after {
+        top: 0;
+        transform: rotate(-135deg);
+    }
+}
